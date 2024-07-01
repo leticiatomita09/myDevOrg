@@ -1,0 +1,62 @@
+<template>
+    <lightning-card title="Create Project">
+        <div class="slds-m-around_medium slds-p-around_medium">
+            <lightning-spinner if:true={isLoading} alternative-text="Loading" size="medium"></lightning-spinner>
+
+            <lightning-progress-indicator current-step={currentStep} type="path" class="slds-m-bottom_medium">
+                <lightning-progress-step label="Project" value="1"></lightning-progress-step>
+                <lightning-progress-step label="Milestones & To-Do Items" value="2"></lightning-progress-step>
+                <lightning-progress-step label="Review" value="3"></lightning-progress-step>
+            </lightning-progress-indicator>
+
+            <template if:true={isProjectStep}>
+                <div class="slds-m-around_medium slds-p-around_medium slds-box">
+                    <lightning-input label="Project Name" value={projectName} onchange={handleProjectNameChange} required class="slds-m-bottom_medium"></lightning-input>
+                    <div class="button-group2">
+                        <lightning-button label="Next" onclick={goToNextStep} disabled={isProjectNameEmpty} variant="brand" icon-name="utility:forward" icon-position="left"></lightning-button>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={isMilestonesToDoStep}>
+                <template for:each={milestones} for:item="milestone">
+                    <div key={milestone.id} class="slds-m-around_medium slds-p-around_medium slds-box">
+                        <lightning-input label="Milestone Name" data-id={milestone.id} value={milestone.name} onchange={handleMilestoneChange} required></lightning-input>
+                        <template for:each={milestone.toDos} for:item="toDo">
+                            <div key={toDo.id} class="slds-m-around_xx-small">
+                                <lightning-input label="To-Do Item Name" data-milestone-id={milestone.id} data-todo-id={toDo.id} value={toDo.name} onchange={handleToDoChange} required></lightning-input>
+                                <lightning-combobox label="To-Do Status" data-milestone-id={milestone.id} data-todo-id={toDo.id} value={toDo.status} options={statusOptions} onchange={handleToDoStatusChange} required></lightning-combobox>
+                            </div>
+                        </template>
+                        <div class="button-group2">
+                            <lightning-button variant="neutral" label="Add To-Do Item" title="To-Do Item" data-id={milestone.id} 
+                            onclick={addToDo} icon-name="utility:add" icon-position="left" class="slds-m-top_small"></lightning-button>
+                        </div>
+                    </div>
+                </template>
+                <div class="button-group slds-align_absolute-center">
+                    <lightning-button label="Back" onclick={goToPreviousStep} variant="neutral" icon-name="utility:back" icon-position="left"></lightning-button>
+                    <lightning-button label="Add Milestone" onclick={addMilestone} variant="neutral" icon-name="utility:add" icon-position="left"></lightning-button>
+                    <lightning-button label="Next" onclick={goToNextStep} disabled={areMilestonesIncomplete} variant="brand" icon-name="utility:forward" icon-position="left"></lightning-button>
+                </div>
+            </template>
+
+            <template if:true={isReviewStep}>
+                <p class="titleProject"><strong>Project Name:</strong> {projectName}</p>
+                <template for:each={milestones} for:item="milestone">
+                    <div key={milestone.id} class="slds-m-around_small">
+                        <p><strong>Milestone:</strong> {milestone.name}</p>
+                        <template for:each={milestone.toDos} for:item="toDo">
+                            <p key={toDo.id}><strong>To-Do Item:</strong> {toDo.name} - <strong>Status:</strong> {toDo.status}</p>
+                        </template>
+                    </div>
+                </template>
+
+                <div class="button-group slds-align_absolute-center">
+                    <lightning-button label="Back" onclick={goToPreviousStep} variant="neutral" icon-name="utility:back" icon-position="left"></lightning-button>
+                    <lightning-button variant="brand" label="Create Project" onclick={handleCreate} icon-name="utility:check" icon-position="left"></lightning-button>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,54 @@
+.slds-m-around_medium {
+    padding: 20px;
+    background-color: #f4f6f9;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.slds-m-around_small {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+}
+
+.slds-m-around_xx-small {
+    margin-bottom: 10px;
+}
+
+.lightning-card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lightning-button {
+    margin-top: 10px;
+    margin-right: 15px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center; 
+    gap: 30px; 
+    margin-top: 10px;
+}
+
+.button-group2 {
+    display: flex;
+    margin-top: 10px;
+}
+
+p {
+    margin: 0 0 10px 0;
+    font-weight: 500;
+}
+
+.slds-text-heading_medium{
+    margin-top: 15px;
+}
+
+.titleProject{
+    font-size: 16px;
+}
